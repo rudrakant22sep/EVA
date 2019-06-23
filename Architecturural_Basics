@@ -1,0 +1,83 @@
+
+*My initial Architecture*
+
+1. Kernels and how do we decide the number of kernels?
+	1st we need to identify what resolution of kernels we are taking
+	and decide the initial count of kernels which we will need 
+	so that after 4-5 convolution layers, we can introduce a Transition Layer
+
+2. 3x3 Convolutions,
+	Our preferred choice of kernels. 
+	It's an odd-sized so it has exact middle point
+	multiples of 3x3 can form all types of bigger odd-kernels
+
+3. How many layers,
+	
+
+4. Receptive Field,
+
+5. Concept of Transition Layers,
+	This is the layer where we change from Convolution Step to 
+	Selective cherry-picking of pixels, using Max-Pool. Here, we carry ahead only 25% of the info
+	
+	Then, we do a 1x1 Convolution which essentially is passing all pixels through a single multiplier
+
+6. Position of Transition Layer,
+	Position should be such that we are convinced that we have captured
+	everything from Edges&gradients to Objects AND everything in between
+
+7. MaxPooling,
+	Selective cherry-picking of pixels, using Max-Pool. Here, we carry ahead only 25% of the info
+
+8. Position of MaxPooling,
+
+9. 1x1 Convolutions,
+
+10. The distance of MaxPooling from Prediction,
+	Max Pooling SHOULD NEVER be before 3-4 Convolution layers from the Prediction Layer
+
+11. When do we stop convolutions and go ahead with a larger kernel or some other alternative (which we have not yet covered)
+	When your input shape and kernel to be used is of comparable size such that 
+	the kernel can move MAX only for 1-pixel of the incoming shape from previous layer
+	AT THIS TIME, we should switch to a bigger kernel, generally of the size of the incoming shape
+	and carry all information out to the Prediction Layer, for Flatten and Activation purposes
+
+12. SoftMax,
+	Softmax is Done at the Prediction Layer where-in it takes all the weights and uses it exponentially
+	Such that each of the weights become the POWERS in exponential order.
+	Now, each individual pixel eventual value becomes the e RAISED to the power it's own weight
+	DIVIDE BY the e RAISED to the power SUM of all weights in that layer
+
+	THUS ESSENTIALLY, doing a Normalization such that new weighted sum of all PIXELS equals 1
+
+===========================
+
+*Based on the Results Observed, I would like to introduce iteratively and sequentially*
+
+13. When to add validation checks
+
+14. How do we know our network is not going well, comparatively, very early
+
+
+15. Batch Normalization,
+
+16. When do we introduce DropOut, or when do we know we have some overfitting
+	When our training accuracy is much higher than our test accuracy
+
+17. DropOut
+	At whichever Convolutional layer, we apply the Dropout
+	there we blacken-off that selected amount of pixels randomly across all channels in that layer
+
+18. Number of Epochs and when to increase them,
+
+===========================
+
+19. Batch Size, and effects of batch size
+20. How do we know our network is not going well, comparatively, very early
+
+===========================
+
+21. LR schedule and concept behind it
+22. Learning Rate
+23. Adam vs SGD
+24. Image Normalization
